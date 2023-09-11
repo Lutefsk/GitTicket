@@ -30,7 +30,7 @@ do
             sr.Close();
         }
         else
-        
+        {
             Console.WriteLine("File does not exist");
         }
     }
