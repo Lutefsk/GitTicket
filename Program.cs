@@ -6,6 +6,16 @@
 // TicketID, Summary, Status, Priority, Submitter, Assigned, Watching
 
 // 1,This is a bug ticket,Open,High,Drew Kjell,Jane Doe,Drew Kjell|John Smith|Bill Jones
+using NLog;
+
+// See https://aka.ms/new-console-template for more information
+string path = Directory.GetCurrentDirectory() + "\\nlog.config";
+
+// create instance of Logger
+var logger = LogManager.LoadConfiguration(path).GetCurrentClassLogger();
+logger.Info("Program started");
+
+
 string choice;
 string file = "Tickets.csv";
 List<string> lines = new List<string>();
@@ -80,6 +90,9 @@ do
             sw.WriteLine(line);
         }
         sw.Close();
+    }else {
+        // log error
+        logger.Error("You must enter a valid number");
     }
 } while (choice == "1" || choice == "2");
 
