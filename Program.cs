@@ -1,12 +1,13 @@
-﻿// See https://aka.ms/new-console-template for more information
-// Build data file with initial system tickets and data in a CSV
+﻿// Build data file with initial system tickets and data in a CSV
 // Write Console application to process and add records to the CSV file
 // Tickets.csv
 
 // TicketID, Summary, Status, Priority, Submitter, Assigned, Watching
 
 // 1,This is a bug ticket,Open,High,Drew Kjell,Jane Doe,Drew Kjell|John Smith|Bill Jones
+using System.Data.Common;
 using NLog;
+using NLog.Config;
 
 // See https://aka.ms/new-console-template for more information
 string path = Directory.GetCurrentDirectory() + "\\nlog.config";
@@ -17,7 +18,7 @@ logger.Info("Program started");
 
 string choice;
 string file = "Tickets.csv";
-List<string> lines = new List<string>();
+List<Ticket> tickets = new List<Ticket>();
 
 do
 {
@@ -35,16 +36,28 @@ do
             {
                 string line = sr.ReadLine();
                 string[] arr = line.Split(',');
-                lines.Add(line);
+                tickets.Add(new Ticket
+                {
+                    Id = arr[0],
+                    Summary = arr [1],
+                    Status = arr [2],
+                    Priority = arr [3],
+                    User = arr [4],
+                    Programmer = arr [5],
+                    Supervisor = arr [6],
+
+                });
             }
             sr.Close();
 
-            foreach (string line in lines)
+            foreach (Ticket Ticket in tickets)
             {
-                string[] arr = line.Split(',');
-                // TODO: Display ticket info
-                Console.WriteLine("Id: {0}, Summary: {1}, Status: {2}, Priority: {3}, User: {4}, Programmer: {5}, Supervisor: {6}", arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]);
+                Console.WriteLine(Ticket);
             }
+                // string[] arr = line.Split(',');
+                // TODO: Display ticket info
+            //     Console.WriteLine("Id: {0}, Summary: {1}, Status: {2}, Priority: {3}, User: {4}, Programmer: {5}, Supervisor: {6}", arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]);
+            // }
         }
         else
         {
@@ -78,21 +91,37 @@ do
             Console.WriteLine("Programmer Supervisor:");
             string supervisor = Console.ReadLine();
 
-            string addTicket = $"Id: {id}, Summary: {summary}, Status: {status}, Priority: {priority}, User: {user}, Programmer: {programmer}, Supervisor: {supervisor}";
-
-            Console.WriteLine("Enter a new ticket (Y/N)?");
-            resp = Console.ReadLine().ToUpper();
-        }
-        StreamWriter sw = new StreamWriter(file, append: true);
-        foreach (string line in lines)
+            // string summary = null;
+            // string id = null;
+            // string status = null;
+            // string priority = null;
+            // string user = null;
+            // string programmer = null;
+            // string supervisor = null;
+            // string addTicket = $"Id: {id}, Summary: {summary}, Status: {status}, Priority: {priority}, User: {user}, Programmer: {programmer}, Supervisor: {supervisor}";
+            Ticket addTicket = new Ticket
         {
-            sw.WriteLine(line);
-        }
-        sw.Close();
-    }else {
-        // log error
-        logger.Error("You must enter a valid number");
+            Id = id,
+            Summary = summary,
+            Status = status,
+            Priority = priority,
+            User = user,
+            Programmer = programmer,
+            Supervisor = supervisor,
+        };
+
+        tickets.Add(addTicket);
     }
+    StreamWriter sw = new StreamWriter(file, append: true);
+    foreach (Ticket ticket in tickets)
+    {
+        sw.WriteLine(tickets);
+    }
+    sw.Close();
+}else {
+    // log error
+    logger.Error("You must enter a valid number");
+}
 } while (choice == "1" || choice == "2");
 
     
