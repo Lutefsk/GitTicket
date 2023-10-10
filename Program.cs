@@ -15,7 +15,6 @@ string path = Directory.GetCurrentDirectory() + "\\nlog.config";
 var logger = LogManager.LoadConfiguration(path).GetCurrentClassLogger();
 logger.Info("Program started");
 
-
 string choice;
 string file = "Tickets.csv";
 List<string> lines = new List<string>();
