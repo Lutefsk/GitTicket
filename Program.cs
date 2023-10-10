@@ -8,6 +8,8 @@
 // 1,This is a bug ticket,Open,High,Drew Kjell,Jane Doe,Drew Kjell|John Smith|Bill Jones
 string choice;
 string file = "Tickets.csv";
+List<string> newTicketsStr = new List<string>();
+
 do
 {
     Console.WriteLine("1) Read data from file.");
@@ -24,6 +26,7 @@ do
             {
                 string line = sr.ReadLine();
                 string[] arr = line.Split(',');
+                 newTicketsStr.Add(line);
                // TODO: Display ticket info
                Console.WriteLine("Id: {0}, Summary: {1}, Status: {2}, Priority: {3}, User: {4}, Programmer: {5}, Supervisor: {6}", arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]);
             }
