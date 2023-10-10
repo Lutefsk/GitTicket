@@ -8,7 +8,7 @@
 // 1,This is a bug ticket,Open,High,Drew Kjell,Jane Doe,Drew Kjell|John Smith|Bill Jones
 string choice;
 string file = "Tickets.csv";
-List<string> newTicketsStr = new List<string>();
+List<string> lines = new List<string>();
 
 do
 {
@@ -26,11 +26,16 @@ do
             {
                 string line = sr.ReadLine();
                 string[] arr = line.Split(',');
-                 newTicketsStr.Add(line);
-               // TODO: Display ticket info
-               Console.WriteLine("Id: {0}, Summary: {1}, Status: {2}, Priority: {3}, User: {4}, Programmer: {5}, Supervisor: {6}", arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]);
+                lines.Add(line);
             }
             sr.Close();
+
+            foreach (string line in lines)
+            {
+                string[] arr = line.Split(',');
+                // TODO: Display ticket info
+                Console.WriteLine("Id: {0}, Summary: {1}, Status: {2}, Priority: {3}, User: {4}, Programmer: {5}, Supervisor: {6}", arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]);
+            }
         }
         else
         {
@@ -39,11 +44,10 @@ do
     }
     else if (choice == "2")
     {
-        StreamWriter sw = new StreamWriter(file);
-
         Console.WriteLine("Enter a new ticket (Y/N)?");
         string resp = Console.ReadLine().ToUpper();
-        while (resp == "Y"){
+        while (resp == "Y")
+        {
             Console.WriteLine("What is the TicketID?");
             string id = Console.ReadLine();
 
@@ -65,10 +69,18 @@ do
             Console.WriteLine("Programmer Supervisor:");
             string supervisor = Console.ReadLine();
 
-            sw.WriteLine("{0},{1},{2},{3},{4},{5},{6}", id, summary, status, priority, user, programmer, supervisor);
+            string addTicket = $"Id: {id}, Summary: {summary}, Status: {status}, Priority: {priority}, User: {user}, Programmer: {programmer}, Supervisor: {supervisor}";
+
             Console.WriteLine("Enter a new ticket (Y/N)?");
             resp = Console.ReadLine().ToUpper();
+        }
+        StreamWriter sw = new StreamWriter(file, append: true);
+        foreach (string line in lines)
+        {
+            sw.WriteLine(line);
         }
         sw.Close();
     }
 } while (choice == "1" || choice == "2");
+
+    
