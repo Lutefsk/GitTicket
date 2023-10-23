@@ -312,8 +312,10 @@ do
     }
     sw.Close();
     }
-    
-}else {
+
+
+else 
+{
     // log error
     logger.Error("You must enter a valid number");
 }
