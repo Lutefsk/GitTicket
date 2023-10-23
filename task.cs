@@ -1,4 +1,4 @@
-public class Ticket 
+public class Task
 {
     public string Id { get; set; }
     public string Summary { get; set;}
@@ -7,6 +7,6 @@ public class Ticket
     public string User { get; set;}
     public string Programmer { get; set;}
     public string Supervisor { get; set;}
-    public string Severity { get; set;}
-    
+    public string Project { get; set;}
+    public string DueDate { get; set;}
 }

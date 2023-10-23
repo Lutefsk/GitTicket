@@ -1,4 +1,4 @@
-public class Ticket 
+public class Enhancement
 {
     public string Id { get; set; }
     public string Summary { get; set;}
@@ -7,6 +7,13 @@ public class Ticket
     public string User { get; set;}
     public string Programmer { get; set;}
     public string Supervisor { get; set;}
-    public string Severity { get; set;}
-    
+    public string Software { get; set;}
+    public string Cost { get; set;}
+    public string Reason { get; set;}
+    public string Estimate { get; set;}
 }
+
+
+
+
+    

@@ -19,11 +19,17 @@ logger.Info("Program started");
 string choice;
 string file = "Tickets.csv";
 List<Ticket> tickets = new List<Ticket>();
+List<Enhancement> enhancements = new List<Enhancement>();
+List<Task> tasks = new List<Task>();
 
 do
 {
-    Console.WriteLine("1) Read data from file.");
-    Console.WriteLine("2) Create file from data.");
+    Console.WriteLine("1) Read data from big ticket file.");
+    Console.WriteLine("2) Create a bug ticket");
+    Console.WriteLine("3) Read data from enhancement file.");
+    Console.WriteLine("4) Request a system enhacnement");
+    Console.WriteLine("5) Read data from task file.");
+    Console.WriteLine("6) Create a new task");
     Console.WriteLine("Enter any other key to exit.");
 
     choice = Console.ReadLine();
@@ -45,6 +51,7 @@ do
                     User = arr [4],
                     Programmer = arr [5],
                     Supervisor = arr [6],
+                    Severity = arr [7],
 
                 });
             }
@@ -54,10 +61,7 @@ do
             {
                 Console.WriteLine(Ticket);
             }
-                // string[] arr = line.Split(',');
-                // TODO: Display ticket info
-            //     Console.WriteLine("Id: {0}, Summary: {1}, Status: {2}, Priority: {3}, User: {4}, Programmer: {5}, Supervisor: {6}", arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]);
-            // }
+                
         }
         else
         {
@@ -66,7 +70,7 @@ do
     }
     else if (choice == "2")
     {
-        Console.WriteLine("Enter a new ticket (Y/N)?");
+        Console.WriteLine("Enter a new bug ticket (Y/N)?");
         string resp = Console.ReadLine().ToUpper();
         while (resp == "Y")
         {
@@ -91,14 +95,9 @@ do
             Console.WriteLine("Programmer Supervisor:");
             string supervisor = Console.ReadLine();
 
-            // string summary = null;
-            // string id = null;
-            // string status = null;
-            // string priority = null;
-            // string user = null;
-            // string programmer = null;
-            // string supervisor = null;
-            // string addTicket = $"Id: {id}, Summary: {summary}, Status: {status}, Priority: {priority}, User: {user}, Programmer: {programmer}, Supervisor: {supervisor}";
+            Console.WriteLine("Ticket Severity:");
+            string severity = Console.ReadLine();
+
             Ticket addTicket = new Ticket
         {
             Id = id,
@@ -108,6 +107,7 @@ do
             User = user,
             Programmer = programmer,
             Supervisor = supervisor,
+            Severity = severity
         };
 
         tickets.Add(addTicket);
@@ -118,10 +118,205 @@ do
         sw.WriteLine(tickets);
     }
     sw.Close();
+    }
+    else if (choice == "3")
+    {
+    if (File.Exists(file))
+        {
+            StreamReader sr = new StreamReader(file);
+            while (!sr.EndOfStream)
+            {
+                string line = sr.ReadLine();
+                string[] arr = line.Split(',');
+                enhancements.Add(new Enhancement
+                {
+                    Id = arr[0],
+                    Summary = arr [1],
+                    Status = arr [2],
+                    Priority = arr [3],
+                    User = arr [4],
+                    Programmer = arr [5],
+                    Supervisor = arr [6],
+                    Software = arr [7],
+                    Cost = arr [8],
+                    Reason = arr [9],
+                    Estimate = arr[10]
+
+                });
+            }
+            sr.Close();
+
+            foreach (Enhancement Enhancement in enhancements)
+            {
+                Console.WriteLine(Enhancement);
+            }
+                
+        }
+        else
+        {
+            Console.WriteLine("File does not exist");
+        }
+    }
+
+    else if (choice == "4")
+    {
+        Console.WriteLine("Enter a new enhancement request (Y/N)?");
+        string resp = Console.ReadLine().ToUpper();
+        while (resp == "Y")
+        {
+            Console.WriteLine("What is the EnhancementID?");
+            string id = Console.ReadLine();
+
+            Console.WriteLine("Enhancement Request Summary:");
+            string summary = Console.ReadLine();
+
+            Console.WriteLine("Status of Enhancement Request:");
+            string status = Console.ReadLine();
+
+            Console.WriteLine("Enhancement Priority:");
+            string priority = Console.ReadLine();
+
+            Console.WriteLine("Enhancement Submitter:");
+            string user = Console.ReadLine();
+
+            Console.WriteLine("Enhancement Request Assigned to:");
+            string programmer = Console.ReadLine();
+
+            Console.WriteLine("IT Deparment Supervisor:");
+            string supervisor = Console.ReadLine();
+
+            Console.WriteLine("Enhancement Software Name:");
+            string software = Console.ReadLine();
+
+            Console.WriteLine("Enhancement Cost in Dollars:");
+            string cost = Console.ReadLine();
+
+            Console.WriteLine("Enhancement Reason:");
+            string reason = Console.ReadLine();
+
+            Console.WriteLine("Enhancement Timeline in weeks:");
+            string estimate = Console.ReadLine();
+
+            Enhancement addEnhancement = new Enhancement
+        {
+            Id = id,
+            Summary = summary,
+            Status = status,
+            Priority = priority,
+            User = user,
+            Programmer = programmer,
+            Supervisor = supervisor,
+            Software = software,
+            Cost = cost,
+            Reason = reason,
+            Estimate = estimate
+        };
+
+        enhancements.Add(addEnhancement);
+    }
+    StreamWriter sw = new StreamWriter(file, append: true);
+    foreach (Enhancement enhancement in enhancements)
+    {
+        sw.WriteLine(enhancements);
+    }
+    sw.Close();
+    }
+    else if (choice == "5")
+    { 
+        if (File.Exists(file))
+        {
+            StreamReader sr = new StreamReader(file);
+            while (!sr.EndOfStream)
+            {
+                string line = sr.ReadLine();
+                string[] arr = line.Split(',');
+                tasks.Add(new Task
+                {
+                    Id = arr[0],
+                    Summary = arr [1],
+                    Status = arr [2],
+                    Priority = arr [3],
+                    User = arr [4],
+                    Programmer = arr [5],
+                    Supervisor = arr [6],
+                    Project = arr [7],
+                    DueDate = arr [8],
+
+                });
+            }
+            sr.Close();
+
+            foreach (Task Task in tasks)
+            {
+                Console.WriteLine(Task);
+            }
+                
+        }
+        else
+        {
+            Console.WriteLine("File does not exist");
+        }
+    }
+    else if (choice == "6")
+    {
+      Console.WriteLine("Enter a new Task (Y/N)?");
+        string resp = Console.ReadLine().ToUpper();
+        while (resp == "Y")
+        {
+            Console.WriteLine("What is the Task ID?");
+            string id = Console.ReadLine();
+
+            Console.WriteLine("Task Summary:");
+            string summary = Console.ReadLine();
+
+            Console.WriteLine("Status of Task:");
+            string status = Console.ReadLine();
+
+            Console.WriteLine("Task Priority:");
+            string priority = Console.ReadLine();
+
+            Console.WriteLine("Task Submitter:");
+            string user = Console.ReadLine();
+
+            Console.WriteLine("Task Assigned to:");
+            string programmer = Console.ReadLine();
+
+            Console.WriteLine("Assignee Supervisor:");
+            string supervisor = Console.ReadLine();
+
+            Console.WriteLine("Task Project Name:");
+            string project = Console.ReadLine();
+
+            Console.WriteLine("Task Due Date:");
+            string dueDate = Console.ReadLine();  
+
+            Task addTask = new Task
+        {
+            Id = id,
+            Summary = summary,
+            Status = status,
+            Priority = priority,
+            User = user,
+            Programmer = programmer,
+            Supervisor = supervisor,
+            Project = project,
+            DueDate = dueDate,
+        };
+
+        tasks.Add(addTask);
+    }
+    StreamWriter sw = new StreamWriter(file, append: true);
+    foreach (Task task in tasks)
+    {
+        sw.WriteLine(tasks);
+    }
+    sw.Close();
+    }
+    
 }else {
     // log error
     logger.Error("You must enter a valid number");
 }
-} while (choice == "1" || choice == "2");
+} while (choice == "1" || choice == "2" || choice == "3" || choice == "4" || choice == "5" || choice == "6");
 
     
