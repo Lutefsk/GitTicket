@@ -153,7 +153,7 @@ do
             {
                 Console.WriteLine(Enhancement);
             }
-                
+             break;   
         }
         else
         {
