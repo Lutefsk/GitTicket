@@ -18,13 +18,15 @@ logger.Info("Program started");
 
 string choice;
 string file = "Tickets.csv";
+string taskfile = "Tasks.csv";
+string enhancefile = "Enhancements.csv";
 List<Ticket> tickets = new List<Ticket>();
 List<Enhancement> enhancements = new List<Enhancement>();
 List<Task> tasks = new List<Task>();
 
 do
 {
-    Console.WriteLine("1) Read data from big ticket file.");
+    Console.WriteLine("1) Read data from bug ticket file.");
     Console.WriteLine("2) Create a bug ticket");
     Console.WriteLine("3) Read data from enhancement file.");
     Console.WriteLine("4) Request a system enhacnement");
@@ -119,11 +121,12 @@ do
     }
     sw.Close();
     }
+
     else if (choice == "3")
     {
-    if (File.Exists(file))
+    if (File.Exists(enhancefile))
         {
-            StreamReader sr = new StreamReader(file);
+            StreamReader sr = new StreamReader(enhancefile);
             while (!sr.EndOfStream)
             {
                 string line = sr.ReadLine();
@@ -214,7 +217,7 @@ do
 
         enhancements.Add(addEnhancement);
     }
-    StreamWriter sw = new StreamWriter(file, append: true);
+    StreamWriter sw = new StreamWriter(enhancefile, append: true);
     foreach (Enhancement enhancement in enhancements)
     {
         sw.WriteLine(enhancements);
@@ -223,9 +226,9 @@ do
     }
     else if (choice == "5")
     { 
-        if (File.Exists(file))
+        if (File.Exists(taskfile))
         {
-            StreamReader sr = new StreamReader(file);
+            StreamReader sr = new StreamReader(taskfile);
             while (!sr.EndOfStream)
             {
                 string line = sr.ReadLine();
@@ -305,7 +308,7 @@ do
 
         tasks.Add(addTask);
     }
-    StreamWriter sw = new StreamWriter(file, append: true);
+    StreamWriter sw = new StreamWriter(taskfile, append: true);
     foreach (Task task in tasks)
     {
         sw.WriteLine(tasks);
@@ -313,12 +316,10 @@ do
     sw.Close();
     }
 
-
 else 
 {
     // log error
     logger.Error("You must enter a valid number");
 }
-} while (choice == "1" || choice == "2" || choice == "3" || choice == "4" || choice == "5" || choice == "6");
-
+} while (choice != "1" && choice != "2" && choice != "3" && choice != "4" && choice != "5" && choice != "6");
     
