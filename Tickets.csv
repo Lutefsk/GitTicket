@@ -1,1 +1,3 @@
 461,Recovery code is not 01 if value in subro field,open,high,CMK,RAR,VAB
+462,Settlement code not valid,open,medium,TPI,RAR,VAB
+463,Transaction code 8 not allowing entry,open,low,SBO,RAR,VAB

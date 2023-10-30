@@ -28,13 +28,17 @@ do
 {
     Console.WriteLine("1) Read data from bug ticket file.");
     Console.WriteLine("2) Create a bug ticket");
-    Console.WriteLine("3) Read data from enhancement file.");
-    Console.WriteLine("4) Request a system enhacnement");
-    Console.WriteLine("5) Read data from task file.");
-    Console.WriteLine("6) Create a new task");
+    Console.WriteLine("3) Find a bug ticket via status."); 
+    Console.WriteLine("4) Find a bug ticket via priority."); 
+    Console.WriteLine("5) Find a bug ticket via submitter");
+    Console.WriteLine("6) Read data from enhancement file.");
+    Console.WriteLine("7) Request a system enhacnement");
+    Console.WriteLine("8) Read data from task file.");
+    Console.WriteLine("9) Create a new task");
     Console.WriteLine("Enter any other key to exit.");
 
     choice = Console.ReadLine();
+
     if (choice == "1")
     {
         if (File.Exists(file))
@@ -121,8 +125,73 @@ do
     }
     sw.Close();
     }
-
     else if (choice == "3")
+    {
+        Console.WriteLine("Enter the status to search for:");
+        string findStatus = Console.ReadLine();
+        {
+                var foundTickets = tickets.FindAll(ticket => ticket.Status.Equals(findStatus));
+                if (foundTickets.Count > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine("Tickets with status " + findStatus + ":");
+                foreach (var ticket in foundTickets)
+                {
+                    Console.WriteLine(ticket);
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine("No tickets found with the status: " + findStatus);
+            }
+        }
+    }
+    else if (choice == "4")
+    {
+        Console.WriteLine("Enter the priority to search for:");
+        string findPriority = Console.ReadLine();
+        {
+                var foundTickets = tickets.FindAll(ticket => ticket.Priority.Equals(findPriority));
+                if (foundTickets.Count > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine("Tickets with priority " + findPriority + ":");
+                foreach (var ticket in foundTickets)
+                {
+                    Console.WriteLine(ticket);
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine("No tickets found with the priority: " + findPriority);
+            }
+        }
+    }
+    else if (choice == "5")
+    {
+        Console.WriteLine("Enter the submitter to search for:");
+        string findUser = Console.ReadLine();
+        {
+                var foundTickets = tickets.FindAll(ticket => ticket.Priority.Equals(findUser));
+                if (foundTickets.Count > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine("Tickets with priority " + findUser + ":");
+                foreach (var ticket in foundTickets)
+                {
+                    Console.WriteLine(ticket);
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine("No tickets found with the priority: " + findUser);
+            }
+        }
+    }
+    else if (choice == "6")
     {
     if (File.Exists(enhancefile))
         {
@@ -161,7 +230,7 @@ do
         }
     }
 
-    else if (choice == "4")
+    else if (choice == "7")
     {
         Console.WriteLine("Enter a new enhancement request (Y/N)?");
         string resp = Console.ReadLine().ToUpper();
@@ -224,7 +293,7 @@ do
     }
     sw.Close();
     }
-    else if (choice == "5")
+    else if (choice == "8")
     { 
         if (File.Exists(taskfile))
         {
@@ -260,7 +329,7 @@ do
             Console.WriteLine("File does not exist");
         }
     }
-    else if (choice == "6")
+    else if (choice == "9")
     {
       Console.WriteLine("Enter a new Task (Y/N)?");
         string resp = Console.ReadLine().ToUpper();
@@ -321,5 +390,5 @@ else
     // log error
     logger.Error("You must enter a valid number");
 }
-} while (choice != "1" && choice != "2" && choice != "3" && choice != "4" && choice != "5" && choice != "6");
+} while (choice != "1" && choice != "2" && choice != "3" && choice != "4" && choice != "5" && choice != "6" && choice != "7" && choice != "8" && choice != "9");
     
