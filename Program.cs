@@ -230,7 +230,7 @@ do
     {
         Console.WriteLine("Enter a new enhancement request (Y/N)?");
         string resp = Console.ReadLine().ToUpper();
-        while (resp == "Y")
+        if (resp == "Y")
         {
             Console.WriteLine("What is the EnhancementID?");
             string id = Console.ReadLine();
@@ -330,7 +330,7 @@ do
     {
       Console.WriteLine("Enter a new Task (Y/N)?");
         string resp = Console.ReadLine().ToUpper();
-        while (resp == "Y")
+        if (resp == "Y")
         {
             Console.WriteLine("What is the Task ID?");
             string id = Console.ReadLine();
