@@ -1,15 +1,9 @@
-﻿// Build data file with initial system tickets and data in a CSV
+﻿// Build data file with initial system tickets, enhancements and task in a CSV file
 // Write Console application to process and add records to the CSV file
-// Tickets.csv
-
-// TicketID, Summary, Status, Priority, Submitter, Assigned, Watching
-
-// 1,This is a bug ticket,Open,High,Drew Kjell,Jane Doe,Drew Kjell|John Smith|Bill Jones
 using System.Data.Common;
 using NLog;
 using NLog.Config;
 
-// See https://aka.ms/new-console-template for more information
 string path = Directory.GetCurrentDirectory() + "\\nlog.config";
 
 // create instance of Logger
@@ -76,9 +70,10 @@ do
     }
     else if (choice == "2")
     {
+    
         Console.WriteLine("Enter a new bug ticket (Y/N)?");
         string resp = Console.ReadLine().ToUpper();
-        while (resp == "Y")
+        if (resp == "Y")
         {
             Console.WriteLine("What is the TicketID?");
             string id = Console.ReadLine();
@@ -121,9 +116,10 @@ do
     StreamWriter sw = new StreamWriter(file, append: true);
     foreach (Ticket ticket in tickets)
     {
-        sw.WriteLine(tickets);
+        sw.WriteLine($"{ticket.Id},{ticket.Summary},{ticket.Status},{ticket.Priority},{ticket.User},{ticket.Programmer},{ticket.Supervisor},{ticket.Severity}");
     }
     sw.Close();
+
     }
     else if (choice == "3")
     {
@@ -289,9 +285,10 @@ do
     StreamWriter sw = new StreamWriter(enhancefile, append: true);
     foreach (Enhancement enhancement in enhancements)
     {
-        sw.WriteLine(enhancements);
+        sw.WriteLine($"{enhancement.Id},{enhancement.Summary},{enhancement.Status},{enhancement.Priority},{enhancement.User},{enhancement.Programmer},{enhancement.Supervisor},{enhancement.Software},{enhancement.Cost},{enhancement.Reason},{enhancement.Estimate}");
     }
     sw.Close();
+
     }
     else if (choice == "8")
     { 
@@ -380,11 +377,11 @@ do
     StreamWriter sw = new StreamWriter(taskfile, append: true);
     foreach (Task task in tasks)
     {
-        sw.WriteLine(tasks);
+       sw.WriteLine($"{task.Id},{task.Summary},{task.Status},{task.Priority},{task.User},{task.Programmer},{task.Supervisor},{task.Project},{task.DueDate}");
     }
     sw.Close();
-    }
 
+    }
 else 
 {
     // log error
